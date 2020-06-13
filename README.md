@@ -41,6 +41,14 @@ In order to accomplish the requierment in the given time I'll create a minimal p
 
 - If needed add cosmetic styles and adjustments
 
+## DEV Logs
+
+- Create Monorepo setup using Yarn Workspaces
+- Boostrap Vue app with vue cli: vue create client
+- Minimal server with grapqhl-yoga and Typescript
+- Install concurrently
+- add initial scripts for dev
+
 ## Technical Review
 
 - TO DO
