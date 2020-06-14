@@ -1,9 +1,12 @@
 {
-  "name": "server",
+  "name": "@revue/server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "ts-node ./src/index.ts",
+    "build": "tsc ./src/index.ts --outDir dist",
+    "start": "npm run build && node ./dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -13,6 +16,11 @@
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "graphql-yoga": "^1.18.3"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "all"
   },
   "engines": {
     "node": "12.16.x"

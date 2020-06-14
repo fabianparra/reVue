@@ -67,6 +67,11 @@
       }
     ]
   },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "all"
+  },
   "browserslist": [
     "> 1%",
     "last 2 versions",

@@ -43,12 +43,20 @@ In order to accomplish the requierment in the given time I'll create a minimal p
 
 ## DEV Logs
 
+### Initial setup
+
 - Create Monorepo setup using Yarn Workspaces
 - Boostrap Vue app with vue cli: vue create client
 - Minimal server with grapqhl-yoga and Typescript
 - Install concurrently
 - add initial scripts for dev
 
-## Technical Review
+### Server - GraphQL Wrapper for Reddit's rest API
 
-- TO DO
+- Created reddit api application for generating a permanent token
+- Added implementation of refresh token
+- Added Posts schema
+- Added Posts resolver
+- Implemented custom field mapping
+- Fixed image url encoding issues
+- Added setup for environment variables
