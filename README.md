@@ -60,3 +60,13 @@ In order to accomplish the requierment in the given time I'll create a minimal p
 - Implemented custom field mapping
 - Fixed image url encoding issues
 - Added setup for environment variables
+
+### reVue App Components
+
+- Implement Apollo
+- Initial layout template
+- Update Vue router
+- PostList Component
+- PostCard Component
+- PostDetail Component
+- Implement pagination with fetchMore
