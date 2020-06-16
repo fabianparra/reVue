@@ -67,10 +67,11 @@ In order to accomplish the requierment in the given time I'll create a minimal p
 - PostDetail Component
 - Implement pagination with fetchMore
 
-### GrapQL Types + Apollo Local Setup
+### GrapQL Types + Apollo Local Setup + PostDetail + Delete Mutation
 
 - Added additional package for managing GraphQL code
-- Added mutation for deleting posts
+- Added mutation for deleting posts on server and ui
 - Updated PostDetail Component for showing current post
 - Implemented Apollo Local setup for managing cached data
--
+- Implemented refetch posts
+- Added single post query for cached data
