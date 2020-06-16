@@ -4,10 +4,6 @@
 
 The requirement is to create a user interface using Vue.js framework that will be feeded using the [Reddit API](http://www.reddit.com/dev/api). The App will display the /top feed which displays the most recent and most popular posts on Reddit.
 
-## Challenges / Notes
-
-- Use the Reddit Rest API as a GraphQL database
-
 ## Dev Plan
 
 In order to accomplish the requierment in the given time I'll create a minimal plan to organize how would the development be approached.
@@ -70,3 +66,11 @@ In order to accomplish the requierment in the given time I'll create a minimal p
 - PostCard Component
 - PostDetail Component
 - Implement pagination with fetchMore
+
+### GrapQL Types + Apollo Local Setup
+
+- Added additional package for managing GraphQL code
+- Added mutation for deleting posts
+- Updated PostDetail Component for showing current post
+- Implemented Apollo Local setup for managing cached data
+-

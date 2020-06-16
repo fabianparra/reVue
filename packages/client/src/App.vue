@@ -2,8 +2,11 @@
   <div id="app">
     <div class="posts-list">
       <PostList :loading="$apollo.loading" :posts="posts" />
-      <p>
-        <button @click="loadMore">More</button>
+      <p v-if="!$apollo.loading">
+        <button v-if="posts.length > 0" :posts="posts" @click="loadMore">
+          More
+        </button>
+        <button v-else @click="queryPosts">Fetch</button>
       </p>
     </div>
     <div class="post-detail">
@@ -15,7 +18,7 @@
 <script>
 import PostList from '@/components/PostList.vue'
 import { Component, Vue } from 'vue-property-decorator'
-import { POSTS_QUERY } from '../graphql/queries/getPosts'
+import { PostsDocument } from '@revue/graphql'
 
 @Component({
   components: {
@@ -23,27 +26,28 @@ import { POSTS_QUERY } from '../graphql/queries/getPosts'
   },
   data: () => ({
     cursor: null,
-    count: 5,
     limit: 5,
+    count: 5,
   }),
   apollo: {
-    posts: {
-      query: POSTS_QUERY,
-      variables: {
-        cursor: null,
-        limit: 5,
-        count: 5,
-      },
+    posts() {
+      return {
+        query: PostsDocument,
+        variables: {
+          cursor: null,
+          limit: 5,
+          count: 5,
+        },
+      }
     },
   },
   methods: {
     loadMore() {
       const lastItem = this.posts.length - 1
-
       this.$apollo.queries.posts.fetchMore({
         variables: {
           cursor: this.posts[lastItem].cursor,
-          limit: 10,
+          limit: 5,
           count: this.count + this.count,
         },
         updateQuery(prev, { fetchMoreResult }) {
@@ -54,6 +58,9 @@ import { POSTS_QUERY } from '../graphql/queries/getPosts'
         },
       })
     },
+    queryPosts() {
+      this.$apollo.queries.posts.refetch()
+    },
   },
 })
 export default class App extends Vue {}
@@ -63,6 +70,7 @@ export default class App extends Vue {}
 body {
   background-color: #f7f7f7;
 }
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

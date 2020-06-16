@@ -9,16 +9,18 @@
   </div>
 </template>
 
-<script>
-import PostCard from '@/components/PostCard'
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+import PostCard from '@/components/PostCard.vue'
+import { Post } from '@revue/graphql'
 
-export default {
-  props: {
-    posts: Array,
-    loading: Boolean,
-  },
+@Component({
   components: {
     PostCard,
   },
+})
+export default class PostList extends Vue {
+  @Prop() private posts!: Post[]
+  @Prop() private loading!: boolean
 }
 </script>

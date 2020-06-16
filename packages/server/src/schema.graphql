@@ -12,3 +12,7 @@ type Post {
   thumbnail: String!
   title: String!
 }
+
+type Mutation {
+  deletePost(id: ID!): ID!
+}

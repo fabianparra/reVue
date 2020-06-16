@@ -1,23 +1,24 @@
 <template>
   <div @click="handleClick(post)" class="post-card">
-    <img v-if="post.thumbnail !== 'default'" :src="post.thumbnail" />
-    <p>{{ post.title }}</p>
+    <img
+      v-if="
+        post.thumbnail !== 'default' &&
+          post.thumbnail !== 'nsfw' &&
+          post.thumbnail !== 'self'
+      "
+      :src="post.thumbnail"
+    />
+    <div>
+      <p>{{ post.title }}</p>
+      <p>{{ post.num_comments }}</p>
+    </div>
+    <button @click.stop="delPost(post)">del</button>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-
-interface Post {
-  id: string
-  author: string
-  cursor: string
-  created: number
-  image: string
-  num_comments: number
-  thumbnail: string
-  title: string
-}
+import { DeletePostDocument, PostsDocument, Post } from '@revue/graphql'
 
 @Component({
   methods: {
@@ -25,29 +26,75 @@ interface Post {
       const path = `/post/${post.id}`
       if (this.$route.path !== path) this.$router.push({ path })
     },
+    delPost(post) {
+      this.$apollo.mutate({
+        mutation: DeletePostDocument,
+        variables: {
+          id: post.id,
+        },
+        update: (store, { data: { deletePost: id } }) => {
+          const data: any = store.readQuery({
+            query: PostsDocument,
+            variables: {
+              cursor: null,
+              limit: 5,
+              count: 5,
+            },
+          })
+
+          data.posts = data.posts.filter((p: Post) => {
+            return p.id !== id
+          })
+
+          // Disabling write to prevent
+          // store.writeQuery({
+          //   query: PostsDocument,
+          //   data,
+          // })
+        },
+        // optimisticResponse: {
+        //   __typename: 'Mutation',
+        //   deletePost: {
+        //     __typename: 'Post',
+        //     id: post.id,
+        //   },
+        // },
+      })
+    },
   },
+  // computed: {
+  //   showImage(): boolean {
+  //     return (
+  //       this.post.thumbnail !== 'default' &&
+  //       this.post.thumbnail !== 'nsfw' &&
+  //       this.post.thumbnail !== 'self'
+  //     )
+  //   },
+  // },
 })
 export default class PostCard extends Vue {
   @Prop() private post!: Post
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 h3 {
   margin: 40px 0 0;
 }
+
 ul {
   list-style-type: none;
   padding: 0;
 }
+
 li {
-  // display: inline-block;
   margin: 0 10px;
 }
+
 a {
   color: #42b983;
 }
+
 .post-card {
   border-bottom: 1px solid #f7f7f7;
   cursor: pointer;

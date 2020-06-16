@@ -1,0 +1,52 @@
+{
+  "name": "@revue/graphql",
+  "version": "1.0.0",
+  "description": "GraphQL Code for @reVue app.",
+  "main": "build/index.js",
+  "typings": "build/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "generate": "graphql-codegen --config codegen.yml"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@graphql-codegen/cli": "1.15.3",
+    "@graphql-codegen/fragment-matcher": "1.15.3",
+    "@graphql-codegen/introspection": "1.15.3",
+    "@graphql-codegen/typescript": "1.15.3",
+    "@graphql-codegen/typescript-document-nodes": "1.15.3",
+    "@graphql-codegen/typescript-graphql-files-modules": "1.15.3",
+    "@graphql-codegen/typescript-operations": "1.15.3",
+    "@graphql-codegen/typescript-vue-apollo": "^1.15.3"
+  },
+  "dependencies": {
+    "@vue/apollo-composable": "^4.0.0-alpha.8",
+    "@vue/composition-api": "^0.6.3",
+    "graphql": "^15.1.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ]
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "all"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
