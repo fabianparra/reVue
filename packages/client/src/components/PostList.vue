@@ -1,10 +1,13 @@
 <template>
-  <div v-if="loading">Loading...</div>
-  <div v-else>
+  <div>
     <div class="post-list">
-      <div v-for="post in posts" :key="post.id">
-        <PostCard :post="post" />
-      </div>
+      <transition-group name="slide" mode="out-in" appear="">
+        <div class="post-card-main" v-for="post in posts" :key="post.id">
+          <PostCard :post="post" />
+        </div>
+      </transition-group>
+
+      <div v-if="loading">Loading...</div>
     </div>
   </div>
 </template>
@@ -24,3 +27,50 @@ export default class PostList extends Vue {
   @Prop() private loading!: boolean
 }
 </script>
+
+<style scoped lang="scss">
+.post-card-main {
+  max-width: 380px;
+}
+.slide-enter {
+  opacity: 0;
+}
+.slide-enter-active {
+  animation: slide-in 1s ease-out forwards;
+  transition: opacity 0.5s;
+}
+.slide-leave {
+  opacity: 1;
+  transition: all 0.5s;
+  //width: 100%;
+}
+.slide-leave-active {
+  animation: slide-out 0.5s ease-out forwards;
+  transition: opacity 0.5s;
+  opacity: 0;
+  position: absolute;
+  //width: 0;
+}
+
+.slide-move {
+  transition: transform 0.5s;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(-100px);
+  }
+  to {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(-100px);
+  }
+}
+</style>

@@ -68,7 +68,7 @@ export default class App extends Vue {}
 
 <style lang="scss">
 body {
-  background-color: #f7f7f7;
+  background-color: #fafafa;
 }
 
 #app {
@@ -76,24 +76,29 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  max-width: 800px;
+  color: #192c33;
+  max-width: 960px;
   margin: 3em auto;
-  background-color: #ffffff;
-  border-radius: 5px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 5px;
   display: flex;
 }
 
 .posts-list {
-  flex: 0 0 40%;
+  flex: 0 0 100%;
   max-height: 80vh;
   overflow: hidden;
   overflow-y: auto;
+
+  @media (min-width: 600px) {
+    flex: 0 0 40%;
+  }
 }
 
 .post-detail {
-  padding: 2.5em;
+  padding: 0 2.5em 2.5em;
   width: 100%;
+
+  h1 {
+    margin-top: 0;
+  }
 }
 </style>

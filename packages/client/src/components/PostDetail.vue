@@ -1,5 +1,5 @@
 <template>
-  <div class="post">
+  <div v-if="post" class="post">
     <h1>{{ post.title }}</h1>
     <img
       v-if="post.image"
