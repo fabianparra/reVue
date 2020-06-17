@@ -75,3 +75,10 @@ In order to accomplish the requierment in the given time I'll create a minimal p
 - Implemented Apollo Local setup for managing cached data
 - Implemented refetch posts
 - Added single post query for cached data
+
+### App card states and styles
+
+- Added new mutation for read posts
+- Added styles for read posts
+- Added animations for slide in an slide out posts
+- General styling updates
