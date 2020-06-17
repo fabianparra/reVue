@@ -60,6 +60,7 @@ const resolvers = {
               ...post,
               cursor: post.data.name,
               image: postImg,
+              read: false,
             }
           })
 
@@ -72,6 +73,9 @@ const resolvers = {
   },
   Mutation: {
     deletePost(_: any, { id }) {
+      return id
+    },
+    postRead(_: any, { id }) {
       return id
     },
   },

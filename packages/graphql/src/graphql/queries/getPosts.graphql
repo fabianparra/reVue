@@ -8,5 +8,6 @@ query posts($cursor: String, $limit: Int, $count: Int) {
     num_comments
     thumbnail
     title
+    read
   }
 }

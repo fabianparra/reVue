@@ -11,8 +11,10 @@ type Post {
   num_comments: Int!
   thumbnail: String!
   title: String!
+  read: Boolean!
 }
 
 type Mutation {
   deletePost(id: ID!): ID!
+  postRead(id: ID!): ID!
 }

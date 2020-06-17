@@ -1,0 +1,3 @@
+mutation PostRead($id: ID!) {
+  postRead(id: $id)
+}

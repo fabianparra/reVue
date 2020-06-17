@@ -35,15 +35,22 @@ export type Post = {
   num_comments: Scalars['Int'];
   thumbnail: Scalars['String'];
   title: Scalars['String'];
+  read: Scalars['Boolean'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   deletePost: Scalars['ID'];
+  postRead: Scalars['ID'];
 };
 
 
 export type MutationDeletePostArgs = {
+  id: Scalars['ID'];
+};
+
+
+export type MutationPostReadArgs = {
   id: Scalars['ID'];
 };
 
@@ -57,6 +64,16 @@ export type DeletePostMutation = (
   & Pick<Mutation, 'deletePost'>
 );
 
+export type PostReadMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type PostReadMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'postRead'>
+);
+
 export type PostsQueryVariables = Exact<{
   cursor?: Maybe<Scalars['String']>;
   limit?: Maybe<Scalars['Int']>;
@@ -68,7 +85,7 @@ export type PostsQuery = (
   { __typename?: 'Query' }
   & { posts: Array<(
     { __typename?: 'Post' }
-    & Pick<Post, 'id' | 'author' | 'created' | 'cursor' | 'image' | 'num_comments' | 'thumbnail' | 'title'>
+    & Pick<Post, 'id' | 'author' | 'created' | 'cursor' | 'image' | 'num_comments' | 'thumbnail' | 'title' | 'read'>
   )> }
 );
 
@@ -100,6 +117,33 @@ export function useDeletePostMutation(options: VueApolloComposable.UseMutationOp
             return VueApolloComposable.useMutation<DeletePostMutation, DeletePostMutationVariables>(DeletePostDocument, options);
           }
 export type DeletePostMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<DeletePostMutation, DeletePostMutationVariables>;
+export const PostReadDocument = gql`
+    mutation PostRead($id: ID!) {
+  postRead(id: $id)
+}
+    `;
+
+/**
+ * __usePostReadMutation__
+ *
+ * To run a mutation, you first call `usePostReadMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `usePostReadMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = usePostReadMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePostReadMutation(options: VueApolloComposable.UseMutationOptionsWithVariables<PostReadMutation, PostReadMutationVariables>) {
+            return VueApolloComposable.useMutation<PostReadMutation, PostReadMutationVariables>(PostReadDocument, options);
+          }
+export type PostReadMutationCompositionFunctionResult = VueApolloComposable.UseMutationReturn<PostReadMutation, PostReadMutationVariables>;
 export const PostsDocument = gql`
     query posts($cursor: String, $limit: Int, $count: Int) {
   posts(cursor: $cursor, limit: $limit, count: $count) {
@@ -111,6 +155,7 @@ export const PostsDocument = gql`
     num_comments
     thumbnail
     title
+    read
   }
 }
     `;

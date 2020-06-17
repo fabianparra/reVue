@@ -25,7 +25,28 @@ export var DeletePostDocument = gql(templateObject_1 || (templateObject_1 = __ma
 export function useDeletePostMutation(options) {
     return VueApolloComposable.useMutation(DeletePostDocument, options);
 }
-export var PostsDocument = gql(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    query posts($cursor: String, $limit: Int, $count: Int) {\n  posts(cursor: $cursor, limit: $limit, count: $count) {\n    id\n    author\n    created\n    cursor\n    image\n    num_comments\n    thumbnail\n    title\n  }\n}\n    "], ["\n    query posts($cursor: String, $limit: Int, $count: Int) {\n  posts(cursor: $cursor, limit: $limit, count: $count) {\n    id\n    author\n    created\n    cursor\n    image\n    num_comments\n    thumbnail\n    title\n  }\n}\n    "])));
+export var PostReadDocument = gql(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n    mutation PostRead($id: ID!) {\n  postRead(id: $id)\n}\n    "], ["\n    mutation PostRead($id: ID!) {\n  postRead(id: $id)\n}\n    "])));
+/**
+ * __usePostReadMutation__
+ *
+ * To run a mutation, you first call `usePostReadMutation` within a Vue component and pass it any options that fit your needs.
+ * When your component renders, `usePostReadMutation` returns an object that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - Several other properties: https://v4.apollo.vuejs.org/api/use-mutation.html#return
+ *
+ * @param options that will be passed into the mutation, supported options are listed on: https://v4.apollo.vuejs.org/guide-composable/mutation.html#options;
+ *
+ * @example
+ * const { mutate, loading, error, onDone } = usePostReadMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function usePostReadMutation(options) {
+    return VueApolloComposable.useMutation(PostReadDocument, options);
+}
+export var PostsDocument = gql(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n    query posts($cursor: String, $limit: Int, $count: Int) {\n  posts(cursor: $cursor, limit: $limit, count: $count) {\n    id\n    author\n    created\n    cursor\n    image\n    num_comments\n    thumbnail\n    title\n    read\n  }\n}\n    "], ["\n    query posts($cursor: String, $limit: Int, $count: Int) {\n  posts(cursor: $cursor, limit: $limit, count: $count) {\n    id\n    author\n    created\n    cursor\n    image\n    num_comments\n    thumbnail\n    title\n    read\n  }\n}\n    "])));
 /**
  * __usePostsQuery__
  *
@@ -48,5 +69,5 @@ export function usePostsQuery(variables, options) {
     if (options === void 0) { options = {}; }
     return VueApolloComposable.useQuery(PostsDocument, variables, options);
 }
-var templateObject_1, templateObject_2;
+var templateObject_1, templateObject_2, templateObject_3;
 //# sourceMappingURL=graphql.js.map
