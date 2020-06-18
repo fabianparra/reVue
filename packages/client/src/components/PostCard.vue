@@ -5,21 +5,14 @@
       redPost(post)
     "
     class="post-card"
-    :class="{ read: post.read }"
+    :class="{ read: post.read, active: active }"
   >
-    <div
-      v-if="
-        post.thumbnail !== 'default' &&
-          post.thumbnail !== 'nsfw' &&
-          post.thumbnail !== 'self'
-      "
-      class="post-card-thumbnail"
-    >
+    <div v-if="showImage" class="post-card-thumbnail">
       <img :src="post.thumbnail" />
     </div>
     <div class="post-card-txt">
       <p>{{ post.title }}</p>
-      <p>{{ post.num_comments }}</p>
+      <p class="post-card-created">{{ postDate(post.created) }}</p>
     </div>
     <a @click.stop="showMenu = !showMenu"
       ><span
@@ -32,22 +25,13 @@
       ><span></span>
     </a>
     <div v-show="showMenu" class="post-menu">
-      <a @click.stop="likePost(post)">
+      <a @click.stop="toggleLikePost(post)">
         <div class="post-menu-item">
           <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="#A2B1B3"
-                d="M11.762 16.74a.5.5 0 0 1 .476 0l4.205 2.274-.78-4.907a.5.5 0 0 1 .135-.427l3.415-3.511-4.722-.744a.5.5 0 0 1-.373-.278L12 4.732 9.882 9.147a.5.5 0 0 1-.373.278l-4.722.744 3.415 3.51a.5.5 0 0 1 .135.428l-.78 4.907 4.205-2.275zM12 17.746l-4.858 2.629a.5.5 0 0 1-.732-.519l.9-5.66-3.914-4.023a.5.5 0 0 1 .281-.843l5.417-.853 2.455-5.118a.5.5 0 0 1 .902 0l2.455 5.118 5.417.853a.5.5 0 0 1 .28.843l-3.913 4.024.9 5.66a.5.5 0 0 1-.732.518L12 17.747z"
-              ></path>
-            </svg>
+            <img src="../assets/star.svg" />
           </div>
-          <div><p>Like</p></div>
+          <div v-if="!like"><p>Like</p></div>
+          <div v-else><p>Unlike</p></div>
         </div>
       </a>
       <a @click.stop="delPost(post)">
@@ -77,6 +61,8 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { Post, DeletePostDocument, PostsDocument } from '@revue/graphql'
 import gql from 'graphql-tag'
+import { eventBus } from '../main'
+import moment from 'moment'
 
 const PostRead = gql`
   mutation PostRead($id: ID!) {
@@ -85,17 +71,22 @@ const PostRead = gql`
 `
 
 @Component({
-  data: () => {
-    return {
-      showMenu: false,
-    }
-  },
+  data: () => ({
+    showMenu: false,
+    active: false,
+    like: false,
+  }),
   methods: {
     handleClick(post: Post) {
       const path = `/post/${post.id}`
       if (this.$route.path !== path) this.$router.push({ path })
+
+      // Active class TODO: clear active for siblings
+      // this.$data.active = this.$route.path === path
+
+      eventBus.handleSidebar('close')
     },
-    delPost(post) {
+    delPost(post: Post) {
       this.$apollo.mutate({
         mutation: DeletePostDocument,
         variables: {
@@ -130,7 +121,7 @@ const PostRead = gql`
         // },
       })
     },
-    redPost(post) {
+    redPost(post: Post) {
       this.$apollo.mutate({
         mutation: PostRead,
         variables: {
@@ -154,19 +145,35 @@ const PostRead = gql`
         },
       })
     },
-    likePost(post) {
+    toggleLikePost(post: Post) {
       console.log('post', post)
+      const likedPosts = eventBus.$data.favorite
+
+      if (likedPosts.find(p => p.id)) {
+        const removeIndex = likedPosts.map(item => item.id).indexOf(post.id)
+        likedPosts.splice(removeIndex, 1)
+        this.$data.like = false
+      } else {
+        likedPosts.push(post)
+        this.$data.like = true
+      }
+    },
+    postDate(date: number): string {
+      const parsedDate = moment.unix(date).format('DD MMM YYYY hh:mm a')
+      const timeAgo = moment(parsedDate).fromNow()
+      return timeAgo
     },
   },
-  // computed: {
-  //   showImage(): boolean {
-  //     return (
-  //       this.post.thumbnail !== 'default' &&
-  //       this.post.thumbnail !== 'nsfw' &&
-  //       this.post.thumbnail !== 'self'
-  //     )
-  //   },
-  // },
+  computed: {
+    showImage(): boolean {
+      return (
+        this.$props.post.thumbnail !== 'default' &&
+        this.$props.post.thumbnail !== 'nsfw' &&
+        this.$props.post.thumbnail !== 'self' &&
+        this.$props.post.thumbnail !== 'spoiler'
+      )
+    },
+  },
 })
 export default class PostCard extends Vue {
   @Prop() private post!: Post
@@ -201,6 +208,11 @@ a {
   margin-bottom: 1rem;
   padding: 1rem;
   position: relative;
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: translate(10px, 10x);
+  }
 
   &-thumbnail {
     flex: 0 0 60px;
@@ -221,6 +233,10 @@ a {
     p {
       margin-top: 0;
     }
+  }
+
+  &-created {
+    float: right;
   }
 }
 
@@ -246,5 +262,13 @@ a {
 .read {
   color: rgb(162, 177, 179) !important;
   //font-weight: normal;
+
+  img {
+    opacity: 0.6;
+  }
+}
+
+.active {
+  background-color: rgb(240, 242, 243);
 }
 </style>

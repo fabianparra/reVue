@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
+import Liked from '../views/Liked.vue'
 import PostList from '../components/PostDetail.vue'
 
 Vue.use(VueRouter)
@@ -15,6 +16,11 @@ const routes: Array<RouteConfig> = [
     path: '/post/:id',
     name: 'Post',
     component: PostList,
+  },
+  {
+    path: '/liked',
+    name: 'Liked',
+    component: Liked,
   },
 ]
 

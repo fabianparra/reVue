@@ -82,3 +82,15 @@ In order to accomplish the requierment in the given time I'll create a minimal p
 - Added styles for read posts
 - Added animations for slide in an slide out posts
 - General styling updates
+
+### Responsive styles
+
+- Added responsive styles for mobile
+- Added sidebar animations
+- Added header and logo
+- Added clear list button
+- Added loader gif
+- Added fields for author, time ago, comments number
+- Added validation for post detail
+- Added routing and refetch for header logo
+- Added like posts array, route and toggle

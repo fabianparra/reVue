@@ -34,6 +34,17 @@ const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
 })
 
+export const eventBus = new Vue({
+  data: {
+    favorite: [],
+  },
+  methods: {
+    handleSidebar(arg: string) {
+      this.$emit('showSidebar', arg)
+    },
+  },
+})
+
 new Vue({
   router,
   apolloProvider,
