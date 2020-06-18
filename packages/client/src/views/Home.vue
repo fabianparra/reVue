@@ -1,5 +1,10 @@
 <template>
   <div class="home">
+    <div class="post-detail-nav">
+      <a class="back-btn" @click="showSidebar">
+        <img src="../assets/left-angle.svg" />
+      </a>
+    </div>
     <h2>Hello Welcome to the reVue app!</h2>
     <p>
       This is a Vue.js application with Apollo GraphQL client. It displays posts
@@ -14,8 +19,15 @@
 </template>
 
 <script>
+import { eventBus } from '../main'
+
 export default {
   name: 'Home',
+  methods: {
+    showSidebar() {
+      eventBus.handleSidebar('open')
+    },
+  },
 }
 </script>
 

@@ -51,6 +51,7 @@ const PostQuery = gql`
     },
   },
   mounted() {
+    // If post is empty route to home
     if (!this.$data.post) this.$router.push({ path: '/' })
   },
 })
@@ -62,7 +63,7 @@ export default class App extends Vue {}
   padding: 0 1.5em 2.5em;
 
   @media (min-width: 600px) {
-    padding: 0 2.5em 2.5em;
+    padding: 1.5em 2.5em 2.5em;
   }
 
   &-detail {

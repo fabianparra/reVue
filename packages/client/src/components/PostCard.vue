@@ -26,29 +26,18 @@
     </a>
     <div v-show="showMenu" class="post-menu">
       <a @click.stop="toggleLikePost(post)">
-        <div class="post-menu-item">
+        <div v-if="showImage" class="post-menu-item">
           <div>
             <img src="../assets/star.svg" />
           </div>
           <div v-if="!like"><p>Like</p></div>
-          <div v-else><p>Unlike</p></div>
+          <div v-else><p>Unike</p></div>
         </div>
       </a>
       <a @click.stop="delPost(post)">
         <div class="post-menu-item">
           <div>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-            >
-              <path
-                fill="#A2B1B3"
-                fill-rule="evenodd"
-                d="M6.09 8H5V7h5V5h4v2h5v1h-1.09L16 19.5H8L6.09 8zM13 7V6h-2v1h2zM7.095 8l1.818 10.5h6.174L16.905 8h-9.81zM13 11.5h1v5h-1v-5zm-3 0h1v5h-1v-5z"
-              ></path>
-            </svg>
+            <img src="../assets/trash.svg" />
           </div>
           <div><p>Delete</p></div>
         </div>
@@ -146,17 +135,25 @@ const PostRead = gql`
       })
     },
     toggleLikePost(post: Post) {
-      console.log('post', post)
+      // Get custom local favorite post collection
       const likedPosts = eventBus.$data.favorite
 
-      if (likedPosts.find(p => p.id)) {
-        const removeIndex = likedPosts.map(item => item.id).indexOf(post.id)
+      // Verify if post exists in array otherwise add it
+      if (likedPosts.find(p => p.id === post.id)) {
+        const removeIndex = likedPosts
+          .map((item: Post) => item.id)
+          .indexOf(post.id)
         likedPosts.splice(removeIndex, 1)
         this.$data.like = false
       } else {
         likedPosts.push(post)
         this.$data.like = true
       }
+
+      // Redirect to liked path
+      if (this.$route.path !== '/liked') this.$router.push({ path: '/liked' })
+      this.$data.showMenu = false
+      eventBus.handleSidebar('close')
     },
     postDate(date: number): string {
       const parsedDate = moment.unix(date).format('DD MMM YYYY hh:mm a')

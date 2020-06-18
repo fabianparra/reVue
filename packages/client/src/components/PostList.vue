@@ -1,6 +1,10 @@
 <template>
   <div>
     <div class="post-list">
+      <a @click="handleClick" class="liked-link">
+        Liked Posts
+        <img src="../assets/star.svg" />
+      </a>
       <transition-group name="slide" mode="out-in" appear="">
         <div class="post-card-main" v-for="post in posts" :key="post.id">
           <PostCard :post="post" />
@@ -18,10 +22,19 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import PostCard from '@/components/PostCard.vue'
 import { Post } from '@revue/graphql'
+import { eventBus } from '../main'
 
 @Component({
   components: {
     PostCard,
+  },
+  methods: {
+    handleClick() {
+      const path = `/liked`
+      if (this.$route.path !== path) this.$router.push({ path })
+
+      eventBus.handleSidebar('close')
+    },
   },
 })
 export default class PostList extends Vue {
@@ -79,5 +92,13 @@ export default class PostList extends Vue {
   to {
     transform: translateX(-100px);
   }
+}
+
+.liked-link {
+  align-items: center;
+  color: #42b983;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
 }
 </style>

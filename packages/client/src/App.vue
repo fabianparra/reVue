@@ -112,8 +112,10 @@ import { eventBus } from './main'
     },
     clearPosts() {
       this.$data.posts.map((post: Post) => {
-        setTimeout(() => this.deletePost(post), 500)
+        setTimeout(() => this.deletePost(post), 300)
       })
+
+      eventBus.$data.favorite = []
     },
   },
   created() {

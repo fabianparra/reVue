@@ -1,8 +1,14 @@
 # reVue (Vue.js + GraphQL + Reddit API) App
 
+reVue App: <https://revueapp.web.app/>
+
+GraphQL Server: <https://revue-server.herokuapp.com/>
+
+Github repository: <https://github.com/fabianparra/reVue>
+
 ## Overview
 
-The requirement is to create a user interface using Vue.js framework that will be feeded using the [Reddit API](http://www.reddit.com/dev/api). The App will display the /top feed which displays the most recent and most popular posts on Reddit.
+The challenge is to create a user interface using Vue.js framework that will be feeded using the [Reddit API](http://www.reddit.com/dev/api). The App will display the /top feed which displays the most recent and most popular posts on Reddit.
 
 ## Dev Plan
 
@@ -83,7 +89,7 @@ In order to accomplish the requierment in the given time I'll create a minimal p
 - Added animations for slide in an slide out posts
 - General styling updates
 
-### Responsive styles
+### Responsive styles, Like posts
 
 - Added responsive styles for mobile
 - Added sidebar animations
@@ -94,3 +100,22 @@ In order to accomplish the requierment in the given time I'll create a minimal p
 - Added validation for post detail
 - Added routing and refetch for header logo
 - Added like posts array, route and toggle
+
+### Final Adjustments
+
+- Liked posts gallery
+- Fix like toggle
+- Clear out liked posts
+- Added mobile navigation for liked posts
+
+### Publish
+
+- Deployed server to Heroku
+- Deployed app to firebase static hosting
+
+## To Improve
+
+- Mobile views and scrolling
+- Refetch not always updates the content in the ui
+- Refetch does not always updates viewed posts state
+- Show bigger image in modal
